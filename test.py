@@ -18,3 +18,9 @@ print("mrs whites cool class")
 print(5+5)
 print(4/5) #divison
 print(10000+10000) #multiplaction
+
+print(5+10.0) #add a float to an integer
+print(10-5.0) #subtract a float from an integer
+print(5/2)
+print(5//2)
+print(5%2)
