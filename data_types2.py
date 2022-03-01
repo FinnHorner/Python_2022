@@ -1,0 +1,18 @@
+print("I was born in the U.S.A. \nI was born in the U.S.A.\n Born in the U.S.A.") #1
+print("This is where the fun begins.") #2
+print("a tring in Python is a sequence of characters")
+print("an integer is a whole number, like 5")
+print("a float is not a whole number such as 2.3")
+print(543/3)
+print(543//3)
+print(543%3)
+print(1000%9)
+print(434//10)
+print(3%2)
+print(5%5)
+print(555/2)
+print(123/2)
+print(123//2)
+print(123%2)
+print(764%2)
+print(165//2)
