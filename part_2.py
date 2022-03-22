@@ -1,4 +1,5 @@
 from adventurelib import *
+
 space = Room("""
 	you are drifting in space. It feels very cold. 
 	A slate-blue spacespace sits completely silenty to your left,
@@ -28,6 +29,23 @@ def enter_spaceship():
 		""")
 		print(current_room)
 
+
+spaceship.east = hallway
+spaceship.south = quarters
+hallway.east = bridge
+hallway.north = cargo
+cargo.east = docking 
+cargo.south = hallway
+quarters.east =mess_hall
+bridge.south = escape_pods
+
+@when ("go DIRECTION")
+def travel(direction):
+	global current_room
+	if direction in current_room.exits():
+		current_room = current_room.exit(direction)
+		print(f"you go {direction}.")
+		print(current_room)
 
 def main():
 	start()
