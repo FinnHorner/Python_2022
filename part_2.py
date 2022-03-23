@@ -1,6 +1,6 @@
 from adventurelib import *
 
-space = Room("""
+space1 = Room("""
 	you are drifting in space. It feels very cold. 
 	A slate-blue spacespace sits completely silenty to your left,
 	its airlock open and waiting
