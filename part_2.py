@@ -10,12 +10,12 @@ space = Room("""
 	""")
 
 spaceship = Room("""
-	The bridge if the spaceship is shiny and white, whith thousands
+	The spaceship is shiny and white, whith thousands
 	of small red, blinking lights.
 	""")
 
 cargo = Room("""
-	Thecargo room is very large
+	The cargo room is very large
 	""")
 
 docking = Room("""
@@ -23,7 +23,7 @@ docking = Room("""
 	""")
 
 hallway = Room("""
-	acsess to diffrent rooms
+	Acsess to diffrent rooms
 	""")
 
 bridge = Room("""
@@ -53,13 +53,13 @@ hallway.east = bridge
 hallway.north = cargo
 cargo.east = docking 
 cargo.south = hallway
-quarters.east =mess_hall
+quarters.east = mess_hall
 bridge.south = escape_pods
 
 Item.description = "" #this adds a blank description to each item
 
 
-knife = Item("a dirty knife","knife")
+knife = Item("dirty knife","knife")
 knife.discription = "the knife has a dull sheen to it but it looks rather sharp."
 
 red_keycard = Item(" a red keycard","red card","red card")
@@ -77,7 +77,7 @@ cargo.items.add(knife)
 escape_pods.items.add(ronaldo)
 docking.items.add(emergency_erickim_button)
 
-current_room = spaceship
+current_room = space
 inventory = Bag()
 
 @when("enter airlock")
@@ -124,8 +124,24 @@ def pickup(item):
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"you pick up the {item}")
-	else
+	else:
+		print(f"you don't see a {item}")
 
+@when("inventory")
+@when("show inventory")
+@when("what is in my pocket")
+def player_inventory():
+	print("you are carrying")
+	for item in inventory:
+		print(item)
+
+@when("look at ITEM")
+def look_at(item):
+	if item in inventory:
+		t = inventory.find(item)
+		print(t.description)
+	else:
+		prinnt(f"You aren't carrying an {item}")
 
 def main():
 	start()
