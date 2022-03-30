@@ -3,7 +3,8 @@ from adventurelib import *
 #Room description 
 car_park = Room("""
 	This is where your investagation begins, You find yourself at a muder sence. 
-	a old man has been stabed 57 times in the chest, the body is located in an ally way behind the old pub. You know nothing yet. 
+	a old man has been stabed 57 times in the chest, the body is located in an alleyway behind the old pub. You know nothing yet.
+	there are two houses nearby and a pub, next to the pub is a alleywau where the body is located. 
 	""")
 
 house_1 = Room(""" 
@@ -11,9 +12,60 @@ house_1 = Room("""
 	They have no other information. """)
 
 house_2 = Room("""
-	A older couple live here, they are right next door to the alyway where the man was murdered. They tell you they heard a loud thump hiting the pavment. They did also here talking but couldnt make it out because they where making tea.
+	A older couple live here, they are right next door to the alyway where the man was murdered. They tell you they heard a loud thump hiting the pavment. 
+	They did also here talking but couldnt make it out because they where making tea.
 	""")
 
-Leve1_pub = Room("""
-	Its quite here mostly because everybody is looking at the body outside. The bartender is presnt though, she didnt see or hear anything but suggesets you talk the people upstairs, they may of heard or saw something. 
+LeveL1_pub = Room("""
+	Its quite here mostly because everybody is looking at the body outside.
+	The bartender is presnt though, she didnt see or hear anything but suggesets you talk the people upstairs, 
+	they may of heard or saw something. 
+	""") 
+
+alleyway = Room("""
+	Its dark and glommy, and most importantly theres a dead body. Theres people standing around it, most likey customers from the pub.
 	""")
+
+old_womens_room = Room("""
+	Here lives a sweet old lady shes kind and asks if you want to come in to have a look around.
+	""")
+
+locked_room = Room("""
+	You find a man covered in blood you are resonably sure this is the man who has been writing those notes. 
+	You ask for his name and he gives you the bname that is writen on some of the notes.
+	""")
+
+broomstick_closet = Room("""
+	The closet is fulled with brooms but it looks like theres a chest tucked away behind the mass amounts of brooms, you get greedy and open it.
+	To your surprise theres a bunch of money and notes talking about diffrent people and what they owe. You also see a knife hidden withen the money. 
+	Theres blood on it.
+	""")
+
+womens_bedroom = Room("""
+	Its old fashioned and smelly in here, it looks like theres a lose floorboard by the closet.
+	""")
+
+corridor_upstairs = Room("""
+	Looks like theres 2 diffrent rooms to enter, theres also what looks to be a broomstick closet.
+	""")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
