@@ -49,6 +49,23 @@ corridor_upstairs = Room("""
 	Looks like theres 2 diffrent rooms to enter, theres also what looks to be a broomstick closet.
 	""")
 
+#Room connections
+car_park.north = house_1
+car_park.south = house_2
+car_park.east = LeveL1_pub
+LeveL1_pub.north = corridor_upstairs
+corridor_upstairs.south = broomstick_closet
+corridor_upstairs.west = locked_room
+corridor_upstairs.east = old_womens_room
+old_womens_room.south = womens_bedroom
+
+
+Item.discription = ""
+
+Torch = Item("torch","Torch")
+Torch.discription = "Its your average torch but it produces 100,000 lumens. "
+
+Clipboard = Item("clipboard","Clipboard","clip board","Clip Board")
 
 
 
