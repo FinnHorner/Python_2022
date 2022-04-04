@@ -1,6 +1,10 @@
 from adventurelib import *
 
 #Room description 
+car = Room("""
+	Its your old but reliable 1976 Honda Accord, this is where you keep all your belongings.
+	""")
+
 car_park = Room("""
 	This is where your investagation begins, You find yourself at a muder sence. 
 	a old man has been stabed 57 times in the chest, the body is located in an alleyway behind the old pub. You know nothing yet.
@@ -50,6 +54,7 @@ corridor_upstairs = Room("""
 	""")
 
 #Room connections
+car.east = car_park
 car_park.north = house_1
 car_park.south = house_2
 car_park.east = LeveL1_pub
@@ -61,17 +66,33 @@ old_womens_room.south = womens_bedroom
 
 
 Item.discription = ""
-
+#item discriptions
 Torch = Item("torch","Torch")
 Torch.discription = "Its your average torch but it produces 100,000 lumens. "
 
 Clipboard = Item("clipboard","Clipboard","clip board","Clip Board")
+Clipboard.discription = "Its your trusty old clipboard, its very good at keeping notes. "
+
+handcuffs = Item("handcuffs","Handcuffs")
+handcuffs.discription = "Just a normal pair of handcuffs."
 
 
 
+car.items.add(Torch)
+car.items.add(Clipboard)
+car.items.add(handcuffs)
 
 
 
+current_room = car
+inventory = Bag()
+
+
+
+#binds
+@when("exit car")
+@when("Exit Car")
+@when("Exit car")
 
 
 
