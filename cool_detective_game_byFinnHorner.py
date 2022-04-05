@@ -1,14 +1,12 @@
 from adventurelib import *
-
+Room.items=Bag()
 #Room description 
 car = Room("""
 	Its your old but reliable 1976 Honda Accord, this is where you keep all your belongings.
 	""")
 
 car_park = Room("""
-	This is where your investagation begins, You find yourself at a muder sence. 
-	a old man has been stabed 57 times in the chest, the body is located in an alleyway behind the old pub. You know nothing yet.
-	there are two houses nearby and a pub, next to the pub is a alleywau where the body is located. 
+	This is where your investagation begins, You find yourself at a muder sence. An old man has been stabed 57 times in the chest, the body is located in an alleyway behind the old pub. There are two houses nearby and a pub, next to the pub is a alleywau where the body is located. 
 	""")
 
 house_1 = Room(""" 
@@ -24,7 +22,7 @@ LeveL1_pub = Room("""
 	Its quite here mostly because everybody is looking at the body outside.
 	The bartender is presnt though, she didnt see or hear anything but suggesets you talk the people upstairs, 
 	they may of heard or saw something. 
-	""") 
+	""")
 
 alleyway = Room("""
 	Its dark and glommy, and most importantly theres a dead body. Theres people standing around it, most likey customers from the pub.
@@ -66,20 +64,22 @@ old_womens_room.south = womens_bedroom
 
 
 Item.discription = ""
+
+
 #item discriptions
-Torch = Item("torch","Torch")
-Torch.discription = "Its your average torch but it produces 100,000 lumens. "
+torch = Item("torch")
+torch.discription = "Its your average torch but it produces 100,000 lumens, the bartender gave it to you. "
 
-Clipboard = Item("clipboard","Clipboard","clip board","Clip Board")
-Clipboard.discription = "Its your trusty old clipboard, its very good at keeping notes. "
+clipboard = Item("clipboard","clip board")
+clipboard.discription = "Its your trusty old clipboard, its very good at keeping notes. "
 
-handcuffs = Item("handcuffs","Handcuffs")
+handcuffs = Item("handcuffs")
 handcuffs.discription = "Just a normal pair of handcuffs."
 
 
 
-car.items.add(Torch)
-car.items.add(Clipboard)
+LeveL1_pub.items.add(torch)
+car.items.add(clipboard)
 car.items.add(handcuffs)
 
 
@@ -91,16 +91,74 @@ inventory = Bag()
 
 #binds
 @when("exit car")
-@when("Exit Car")
-@when("Exit car")
+def exit_car():
+	global current_room
+	if current_room is not car:
+		print("This is not the way.")
+	else:
+		current_room = car_park
+		print("""You are now in the car park, its cold and dark but its peaceful.
+			""")
+		print(current_room)
+
+
+
+@when ("go DIRECTION")
+def travel(direction):
+	global current_room
+	if direction in current_room.exits():
+		current_room = current_room.exit(direction)
+		print(f"you go {direction}.")
+		print(current_room)
+
+
+
+@when("look")
+def look():
+	print(current_room)
+	print(f"There are exits to the {current_room.exits()}")
+	if len(current_room.items) > 0:
+		print("you also see:")
+		for item in current_room.items:
+			print(item)
+
+
+@when("get ITEM")
+@when("take ITEM")
+@when("pick up ITEM")
+def pickup(item):
+	if item in current_room.items:
+		t = current_room.items.take(item)
+		inventory.add(t)
+		print(f"you pick up the {item}")
+	else:
+		print(f"you don't see a {item}")
+
+
+@when("inventory")
+@when("show inventory")
+@when("what is in my pocket")
+def player_inventory():
+	print("you are carrying")
+	for item in inventory:
+		print(item)
+
+@when("look at ITEM")
+def look_at(item):
+	if item in inventory:
+		t = inventory.find(item)
+		print(t.description)
+	else:
+		prinnt(f"You aren't carrying an {item}")
 
 
 
 
+def main():
+	start()
 
-
-
-
+if __name__ == '__main__':
+	main()
 
 
 
