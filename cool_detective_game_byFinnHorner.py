@@ -1,12 +1,18 @@
 from adventurelib import *
 Room.items=Bag()
+
+Room.add_direction("up","down")
+
+print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start.")
+
+
 #Room description 
 car = Room("""
-	Its your old but reliable 1976 Honda Accord, this is where you keep all your belongings.
+	You arive in your old but reliable 1976 Honda Accord, this is where you keep all your belongings. You might need these items.
 	""")
 
 car_park = Room("""
-	This is where your investagation begins, You find yourself at a muder sence. An old man has been stabed 57 times in the chest, the body is located in an alleyway behind the old pub. There are two houses nearby and a pub, next to the pub is a alleywau where the body is located. 
+	This is where your investagation begins, You find yourself at a muder sence. An old man has been stabed 57 times in the chest. There are two houses nearby and a pub, next to the pub is a alleyway where the body is located. 
 	""")
 
 house_1 = Room(""" 
@@ -19,9 +25,7 @@ house_2 = Room("""
 	""")
 
 LeveL1_pub = Room("""
-	Its quite here mostly because everybody is looking at the body outside.
-	The bartender is presnt though, she didnt see or hear anything but suggesets you talk the people upstairs, 
-	they may of heard or saw something. 
+	Its quite here mostly because everybody is looking at the body outside. The bartender is presnt though, she didnt see or hear anything but suggesets you talk the people upstairs, they may of heard or saw something. 
 	""")
 
 alleyway = Room("""
@@ -56,7 +60,9 @@ car.east = car_park
 car_park.north = house_1
 car_park.south = house_2
 car_park.east = LeveL1_pub
-LeveL1_pub.north = corridor_upstairs
+LeveL1_pub.up = corridor_upstairs
+corridor_upstairs.down = LeveL1_pub
+LeveL1_pub.south = alleyway
 corridor_upstairs.south = broomstick_closet
 corridor_upstairs.west = locked_room
 corridor_upstairs.east = old_womens_room
@@ -76,16 +82,22 @@ clipboard.discription = "Its your trusty old clipboard, its very good at keeping
 handcuffs = Item("handcuffs")
 handcuffs.discription = "Just a normal pair of handcuffs."
 
+loose_floorboard = Item("loose floorboard")
+loose_floorboard.discription = "its your average floorboard but this one is loose. Probably somthing hidding under it."
+
 
 
 LeveL1_pub.items.add(torch)
 car.items.add(clipboard)
 car.items.add(handcuffs)
-
+old_womens_room.items.add(loose_floorboard)
 
 
 current_room = car
 inventory = Bag()
+
+#variables
+
 
 
 
@@ -110,6 +122,10 @@ def travel(direction):
 		current_room = current_room.exit(direction)
 		print(f"you go {direction}.")
 		print(current_room)
+	if current_room == corridor_upstairs and direction == "west":
+		print("The door is locked..... kinda sus")
+		return
+
 
 
 
@@ -131,8 +147,9 @@ def pickup(item):
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"you pick up the {item}")
-	else:
-		print(f"you don't see a {item}")
+		if t == loose_floorbaord:
+			print("There is a key under it")
+			
 
 
 @when("inventory")
