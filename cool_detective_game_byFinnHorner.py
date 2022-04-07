@@ -2,13 +2,13 @@ from adventurelib import *
 Room.items=Bag()
 
 Room.add_direction("up","down")
-
+#opening statement
 print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start.")
 
 
 #Room description 
 car = Room("""
-	You arive in your old but reliable 1976 Honda Accord, this is where you keep all your belongings. You might need these items.
+	You arive in your old but reliable 1976 Honda Accord, this is where you keep all your belongings. You might need these.
 	""")
 
 car_park = Room("""
@@ -76,28 +76,28 @@ Item.discription = ""
 torch = Item("torch")
 torch.discription = "Its your average torch but it produces 100,000 lumens, the bartender gave it to you. "
 
-clipboard = Item("clipboard","clip board")
-clipboard.discription = "Its your trusty old clipboard, its very good at keeping notes. "
 
 handcuffs = Item("handcuffs")
 handcuffs.discription = "Just a normal pair of handcuffs."
 
-loose_floorboard = Item("loose floorboard")
+loose_floorboard = Item("loose floorboard","floorboard")
 loose_floorboard.discription = "its your average floorboard but this one is loose. Probably somthing hidding under it."
 
+key = Item("key")
+key.discription = "Maybe this key unlocks somthing?"
 
+#defing bags
 
-LeveL1_pub.items.add(torch)
-car.items.add(clipboard)
+car.items.add(torch)
 car.items.add(handcuffs)
-old_womens_room.items.add(loose_floorboard)
+womens_bedroom.items.add(loose_floorboard)
 
 
 current_room = car
 inventory = Bag()
 
 #variables
-
+key_taken == False
 
 
 
@@ -118,13 +118,24 @@ def exit_car():
 @when ("go DIRECTION")
 def travel(direction):
 	global current_room
+	
+	if current_room == corridor_upstairs and direction == 'west':
+		print("The door is locked..... kinda sus")
+		return
+	else: current_room == corridor_upstairs and direction == 'west' and key_taken == True
+		print()
+
 	if direction in current_room.exits():
 		current_room = current_room.exit(direction)
 		print(f"you go {direction}.")
 		print(current_room)
-	if current_room == corridor_upstairs and direction == "west":
-		print("The door is locked..... kinda sus")
-		return
+	else:
+		print("you cant go that way.")
+
+
+
+	
+	
 
 
 
@@ -147,9 +158,11 @@ def pickup(item):
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"you pick up the {item}")
-		if t == loose_floorbaord:
+		if t == loose_floorboard:
 			print("There is a key under it")
-			
+			womens_bedroom.items.add(key)
+	else:
+		print(f"You do not see a {item}.")
 
 
 @when("inventory")
@@ -166,7 +179,7 @@ def look_at(item):
 		t = inventory.find(item)
 		print(t.description)
 	else:
-		prinnt(f"You aren't carrying an {item}")
+		prinnt(f"You aren't carrying an {item}.")
 
 
 
