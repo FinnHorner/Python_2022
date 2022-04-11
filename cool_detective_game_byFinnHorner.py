@@ -6,7 +6,7 @@ Room.add_direction("up","down")
 print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start.")
 
 
-#Room description 
+#Room description. These are used to give my room discriptions so the player knows whats happening in there current state.
 car = Room("""
 	You arive in your old but reliable 1976 Honda Accord, this is where you keep all your belongings. You might need these.
 	""")
@@ -38,7 +38,7 @@ old_womens_room = Room("""
 
 locked_room = Room("""
 	You find a man covered in blood you are resonably sure this is the man who has been writing those notes. 
-	You ask for his name and he gives you the bname that is writen on some of the notes.
+	You ask for his name. He replies with "John Connor". You ask him if you killed the man outside. He says "no, I tried to stop him from dieing, it was a machine, I I couldnt stop it". He starts tearing up then suddenly stops and stares at you with a horrifed stare, you turn around to see a gaint disfigured machine. It lunges at you and you die.
 	""")
 
 broomstick_closet = Room("""
@@ -92,12 +92,12 @@ car.items.add(torch)
 car.items.add(handcuffs)
 womens_bedroom.items.add(loose_floorboard)
 
-
+#variables
 current_room = car
 inventory = Bag()
 
-#variables
-key_taken == False
+
+key_taken = False
 
 
 
@@ -114,26 +114,28 @@ def exit_car():
 		print(current_room)
 
 
-
+#this is my code for locking and unlocking doors
 @when ("go DIRECTION")
 def travel(direction):
 	global current_room
-	
-	if current_room == corridor_upstairs and direction == 'west':
+	global key_taken
+	if current_room == corridor_upstairs and direction == 'west' and key_taken ==True:
 		print("The door is locked..... kinda sus")
 		return
-	else: current_room == corridor_upstairs and direction == 'west' and key_taken == True
-		print()
+	elif current_room == corridor_upstairs and direction == 'west' and key_taken == False:
+		print(current_room)
+	else:
+		print("The door is locked")
 
 	if direction in current_room.exits():
 		current_room = current_room.exit(direction)
 		print(f"you go {direction}.")
 		print(current_room)
+		print(current_room.exits())
 	else:
 		print("you cant go that way.")
 
-
-
+	
 	
 	
 
@@ -154,15 +156,18 @@ def look():
 @when("take ITEM")
 @when("pick up ITEM")
 def pickup(item):
+	global key_taken 
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		inventory.add(t)
 		print(f"you pick up the {item}")
-		if t == loose_floorboard:
-			print("There is a key under it")
-			womens_bedroom.items.add(key)
+	if t == loose_floorboard:
+		print("There is a key under it")
+		womens_bedroom.items.add(key)			
+		key_taken == True
 	else:
 		print(f"You do not see a {item}.")
+	
 
 
 @when("inventory")
