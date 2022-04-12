@@ -3,8 +3,9 @@ Room.items=Bag()
 
 Room.add_direction("up","down")
 #opening statement
-print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start.")
-
+print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start. (btw this game is very easy and should only take 30 secounds, the locked door doesnt work lol. Use the directions north east and south to go in diffrent directions. And the look function to see items. To make this game more realistic please find key before heading to the west in the corridor upstairs, thank you.")
+print("\n")
+print("Created by Finn Horner")
 
 #Room description. These are used to give my room discriptions so the player knows whats happening in there current state.
 car = Room("""
@@ -16,12 +17,10 @@ car_park = Room("""
 	""")
 
 house_1 = Room(""" 
-	A young couple live here. Its the house accross the street from the pub. they tell you they herad talking but wernt able to make out.
-	They have no other information. """)
+	A young couple live here. Its the house accross the street from the pub. they tell you they herad talking but wernt able to make out. They have no other information. """)
 
 house_2 = Room("""
-	A older couple live here, they are right next door to the alyway where the man was murdered. They tell you they heard a loud thump hiting the pavment. 
-	They did also here talking but couldnt make it out because they where making tea.
+	A older couple live here, they are right next door to the alyway where the man was murdered. They tell you they heard a loud thump hiting the pavment. They did also here talking but couldnt make it out because they where making tea.
 	""")
 
 LeveL1_pub = Room("""
@@ -37,14 +36,11 @@ old_womens_room = Room("""
 	""")
 
 locked_room = Room("""
-	You find a man covered in blood you are resonably sure this is the man who has been writing those notes. 
-	You ask for his name. He replies with "John Connor". You ask him if you killed the man outside. He says "no, I tried to stop him from dieing, it was a machine, I I couldnt stop it". He starts tearing up then suddenly stops and stares at you with a horrifed stare, you turn around to see a gaint disfigured machine. It lunges at you and you die.
+	You find a man covered in blood you are resonably sure this is the man who has been writing those notes. You ask for his name. He replies with "John Connor". You ask him if you killed the man outside. He says "no, I tried to stop him from dieing, it was a machine, I I couldnt stop it". He starts tearing up then suddenly stops and stares at you with a horrifed stare, you turn around to see a gaint disfigured machine. It lunges at you and you die. THE END (ps dont go east the game is done)
 	""")
 
 broomstick_closet = Room("""
-	The closet is fulled with brooms but it looks like theres a chest tucked away behind the mass amounts of brooms, you get greedy and open it.
-	To your surprise theres a bunch of money and notes talking about diffrent people and what they owe. You also see a knife hidden withen the money. 
-	Theres blood on it.
+	The closet is fulled with brooms but it looks like theres a chest tucked away behind the mass amounts of brooms, you get greedy and open it. To your surprise theres a bunch of money and notes talking about diffrent people and what they owe. You also see a knife hidden withen the money. Theres blood on it.
 	""")
 
 womens_bedroom = Room("""
@@ -74,22 +70,20 @@ Item.discription = ""
 
 #item discriptions
 torch = Item("torch")
-torch.discription = "Its your average torch but it produces 100,000 lumens, the bartender gave it to you. "
+torch.discription = "Its your average torch but it produces 100,000 lumens, the bartender gave it to you. Do you really need it."
 
-
-handcuffs = Item("handcuffs")
-handcuffs.discription = "Just a normal pair of handcuffs."
 
 loose_floorboard = Item("loose floorboard","floorboard")
 loose_floorboard.discription = "its your average floorboard but this one is loose. Probably somthing hidding under it."
 
 key = Item("key")
-key.discription = "Maybe this key unlocks somthing?"
+key.discription = "Maybe this key unlocks something?"
+
 
 #defing bags
 
-car.items.add(torch)
-car.items.add(handcuffs)
+LeveL1_pub.items.add(torch)
+
 womens_bedroom.items.add(loose_floorboard)
 
 #variables
@@ -126,6 +120,7 @@ def travel(direction):
 		print(current_room)
 	else:
 		print("The door is locked")
+		
 
 	if direction in current_room.exits():
 		current_room = current_room.exit(direction)
@@ -135,8 +130,8 @@ def travel(direction):
 	else:
 		print("you cant go that way.")
 
-	
-	
+
+
 	
 
 
@@ -157,6 +152,7 @@ def look():
 @when("pick up ITEM")
 def pickup(item):
 	global key_taken 
+
 	if item in current_room.items:
 		t = current_room.items.take(item)
 		inventory.add(t)
@@ -168,6 +164,8 @@ def pickup(item):
 	else:
 		print(f"You do not see a {item}.")
 	
+
+
 
 
 @when("inventory")
