@@ -3,7 +3,7 @@ Room.items=Bag()
 
 Room.add_direction("up","down")
 #opening statement
-print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start. (btw this game is very easy and should only take 30 secounds, the locked door doesnt work lol. Use the directions north east and south to go in diffrent directions. And the look function to see items. To make this game more realistic please find key before heading to the west in the corridor upstairs, thank you.")
+print("The local police station has called you to a old pub located North of London. You are called there to investagate a murder. Type look to start. (btw this game is very easy and should only take 30 secounds, the locked door doesnt work lol. Use the directions north east and south to go in diffrent directions. And the look function to see items. To make this game more realistic please find key before heading to the west in the corridor upstairs, thank you. You can also use inventory to look inside your inventory.")
 print("\n")
 print("Created by Finn Horner")
 
@@ -40,7 +40,7 @@ locked_room = Room("""
 	""")
 
 broomstick_closet = Room("""
-	The closet is fulled with brooms but it looks like theres a chest tucked away behind the mass amounts of brooms, you get greedy and open it. To your surprise theres a bunch of money and notes talking about diffrent people and what they owe. You also see a knife hidden withen the money. Theres blood on it.
+	The closet is fulled with brooms but it looks like theres a chest tucked away behind the mass amounts of brooms, you get greedy and open it. To your surprise theres a bunch of money and notes talking about diffrent people. You also see a knife hidden withen the money. Theres blood on it.
 	""")
 
 womens_bedroom = Room("""
@@ -60,7 +60,7 @@ LeveL1_pub.up = corridor_upstairs
 corridor_upstairs.down = LeveL1_pub
 LeveL1_pub.south = alleyway
 corridor_upstairs.south = broomstick_closet
-corridor_upstairs.west = locked_room
+
 corridor_upstairs.east = old_womens_room
 old_womens_room.south = womens_bedroom
 
@@ -79,6 +79,8 @@ loose_floorboard.discription = "its your average floorboard but this one is loos
 key = Item("key")
 key.discription = "Maybe this key unlocks something?"
 
+door = Item("door")
+door.discription = "door"
 
 #defing bags
 
@@ -89,10 +91,7 @@ womens_bedroom.items.add(loose_floorboard)
 #variables
 current_room = car
 inventory = Bag()
-
-
 key_taken = False
-
 
 
 #binds
@@ -111,15 +110,13 @@ def exit_car():
 #this is my code for locking and unlocking doors
 @when ("go DIRECTION")
 def travel(direction):
-	global current_room
-	global key_taken
-	if current_room == corridor_upstairs and direction == 'west' and key_taken ==True:
-		print("The door is locked..... kinda sus")
-		return
-	elif current_room == corridor_upstairs and direction == 'west' and key_taken == False:
-		print(current_room)
+
+	global door_locked
+	"""if current_room == corridor_upstairs and door_locked == True and player_inventory.find("key"):
+	 print("You insert the key into the door, you twist and the door starts to open....") 
+	 corridor_upstairs.west = locked_room
 	else:
-		print("The door is locked")
+		Print("you do not have a key.")"""
 		
 
 	if direction in current_room.exits():
@@ -132,11 +129,6 @@ def travel(direction):
 
 
 
-	
-
-
-
-
 @when("look")
 def look():
 	print(current_room)
@@ -145,8 +137,24 @@ def look():
 		print("you also see:")
 		for item in current_room.items:
 			print(item)
+	
+@when ("unlock door")
+def unlock_door():
+	global door_locked
+	if current_room == corridor_upstairs and door_locked == True and player_inventory.find("key"):
+	 print("You insert the key into the door, you twist and the door starts to open....") 
+	 corridor_upstairs.west = locked_room
+	else:
+		Print("you do not have a key.")
+		
 
 
+
+
+
+
+
+#this code is for my key under floorboard code
 @when("get ITEM")
 @when("take ITEM")
 @when("pick up ITEM")
@@ -166,7 +174,7 @@ def pickup(item):
 	
 
 
-
+#this code lets me put stuff in and inventory
 
 @when("inventory")
 @when("show inventory")
